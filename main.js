@@ -44,53 +44,45 @@ localStorage.setItem('count', count);
 let listForm = document.querySelector("#list-form");
 let listInput = document.querySelector("#list-input");
 let savedList = document.querySelector("ol");
-// let savedListItem = document.querySelector("li");
 
-
-let savedListValue = localStorage.getItem('savedListValue');
-
-
+let savedListValue = localStorage.getItem('list');
 
 function setupArray() {
-    savedListValue = localStorage.getItem('savedListValue');
+    savedListValue = localStorage.getItem('list');
     if (savedListValue === null) {
         savedListValue = [];
         
     } else {
         savedListValue = JSON.parse(savedListValue);
 
-        for (const str of savedListValue) {
-            console.log(str);
-            let savedListItem = document.createElement("li")
-
+        for (let i = 0; i < savedListValue.length; i++) {
+            let savedListItem = document.createElement("li");
+            savedListItem.innerHTML = savedListValue[i];
             savedList.appendChild(savedListItem);
-
-            savedListItem.innerHTML = str;
-
         }
     }
 
 }
 
+setupArray();
+
 listForm.addEventListener('submit', function(event) {
     event.preventDefault();
-    setupArray();
+
     let newInput = listInput.value;
+
     savedListValue.push(newInput);
-    // localStorage.setItem('savedListValue', JSON.stringify(savedListValue));
-    // savedListValue = localStorage.getItem('savedListValue');
+
+    localStorage.setItem('list', JSON.stringify(savedListValue));
     console.log(savedListValue);
     
     let savedListItem = document.createElement("li");
 
-    savedList.appendChild(savedListItem);
-
     savedListItem.innerHTML = newInput;
 
+    savedList.appendChild(savedListItem);
 
-        
-    
-
+    listInput.value = '';
 
 })
 
